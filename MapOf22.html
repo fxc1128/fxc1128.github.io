@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />  
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+  <script type="text/javascript" src="./echarts.min.js"></script>
+  <script type="text/javascript" src="./bmap.min.js"></script>
+  <script src="https://api.map.baidu.com/api?v=3.0&ak=SvmGICyYaynvX1cgtESe3k3yDhdOnuuP"></script>
+  <title>纪录片《二十二》受访老人分布</title>  
+  <style type="text/css">  
+     html{height:100%}  
+     body{height:100%;margin:0px;padding:0px}  
+     #container{height:100%}  
+  </style>  
+</head>
+<body>
+  <div id="container" ></div>
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+    
+    var option;
+
+    const data = [
+  { name: '王志凤' },
+  { name: '陈连村' },
+  { name: '毛银梅' },
+  { name: '何玉珍' },
+  { name: '韦绍兰' },
+  { name: '李凤云' },
+  { name: '张先兔' },
+  { name: '李秀梅' },
+  { name: '赵兰英' },
+  { name: '刘改连' },
+  { name: '任兰娥' },
+  { name: '郝菊香' },
+  { name: '骈焕英' },
+  { name: '李爱连' },
+  { name: '曹黑毛' },
+  { name: '刘风孩' },
+  { name: '符桂英' },
+  { name: '林爱兰' },
+  { name: '符美菊' },
+  { name: '李美金' },
+  { name: '陈亚扁' },
+  { name: '黄有良' },
+
+];
+const geoCoordMap = {
+  毛银梅: [113.992169,30.950972],
+  何玉珍: [110.464844,24.480509],
+  韦绍兰: [110.4857,24.487414],
+  李凤云: [131.140362,44.067499],
+  张先兔: [113.082697,38.190346],
+  李秀梅: [113.082697,38.190346],
+  赵兰英: [112.66505,36.967345],
+  刘改连: [113.039779,38.306816],
+  任兰娥: [112.66505,36.967345],
+  郝菊香: [112.602381,36.973174],
+  骈焕英: [112.709712,36.74484],
+  李爱连: [112.698688,36.943828],
+  曹黑毛: [113.290606,38.433187],
+  刘风孩: [112.672832,36.825008],
+  符桂英: [109.880703,19.76273],
+  林爱兰: [109.605959,19.686344],
+  符美菊: [109.865556,19.572915],
+  王志凤: [109.872064,19.675387],
+  李美金: [109.802764,19.589927],
+  陈连村: [110.391088,18.845269],
+  陈亚扁: [109.952111,18.596885],
+  黄有良: [109.816193,18.493281],
+
+};
+const convertData = function (data) {
+  var res = [];
+  for (var i = 0; i < data.length; i++) {
+    var geoCoord = geoCoordMap[data[i].name];
+    if (geoCoord) {
+      res.push({
+        name: data[i].name,
+        value: geoCoord.concat(data[i].value)
+      });
+    }
+  }
+  return res;
+};
+option = {
+  title: {
+    text: '纪录片《二十二》老人信息 - 百度地图',
+    left: 'center'
+  },
+  tooltip: {
+    trigger: 'item'
+  },
+  bmap: {
+    center: [104.114129, 37.550339],
+    zoom: 4,
+    roam: true,
+    mapStyle: {
+      styleJson: [
+        {
+          featureType: 'water',
+          elementType: 'all',
+          stylers: {
+            color: '#d1d1d1'
+          }
+        },
+        {
+          featureType: 'land',
+          elementType: 'all',
+          stylers: {
+            color: '#f3f3f3'
+          }
+        },
+        {
+          featureType: 'railway',
+          elementType: 'all',
+          stylers: {
+            visibility: 'off'
+          }
+        },
+        {
+          featureType: 'highway',
+          elementType: 'all',
+          stylers: {
+            color: '#fdfdfd'
+          }
+        },
+        {
+          featureType: 'highway',
+          elementType: 'labels',
+          stylers: {
+            visibility: 'off'
+          }
+        },
+        {
+          featureType: 'arterial',
+          elementType: 'geometry',
+          stylers: {
+            color: '#fefefe'
+          }
+        },
+        {
+          featureType: 'arterial',
+          elementType: 'geometry.fill',
+          stylers: {
+            color: '#fefefe'
+          }
+        },
+        {
+          featureType: 'poi',
+          elementType: 'all',
+          stylers: {
+            visibility: 'off'
+          }
+        },
+        {
+          featureType: 'green',
+          elementType: 'all',
+          stylers: {
+            visibility: 'off'
+          }
+        },
+        {
+          featureType: 'subway',
+          elementType: 'all',
+          stylers: {
+            visibility: 'off'
+          }
+        },
+        {
+          featureType: 'manmade',
+          elementType: 'all',
+          stylers: {
+            color: '#d1d1d1'
+          }
+        },
+        {
+          featureType: 'local',
+          elementType: 'all',
+          stylers: {
+            color: '#d1d1d1'
+          }
+        },
+        {
+          featureType: 'arterial',
+          elementType: 'labels',
+          stylers: {
+            visibility: 'off'
+          }
+        },
+        {
+          featureType: 'boundary',
+          elementType: 'all',
+          stylers: {
+            color: '#fefefe'
+          }
+        },
+        {
+          featureType: 'building',
+          elementType: 'all',
+          stylers: {
+            color: '#d1d1d1'
+          }
+        },
+        {
+          featureType: 'label',
+          elementType: 'labels.text.fill',
+          stylers: {
+            color: '#999999'
+          }
+        }
+      ]
+    }
+  },
+  series: [
+    {
+      name: '在世',
+      type: 'effectScatter',
+      coordinateSystem: 'bmap',
+      data: convertData(data.slice(0,2)),
+      symbolSize: 12,
+      encode: {
+        value: 2
+      },
+      showEffectOn: 'render',
+      rippleEffect: {
+        brushType: 'stroke'
+      },
+      label: {
+        formatter: '{b}',
+        position:'right',
+        show: true
+      },
+      itemStyle: {
+        shadowBlur: 20,
+        shadowColor: '#333'
+      },
+      emphasis: {
+        scale: true
+      },
+      zlevel: 1
+    },
+    {
+      name: '离世',
+      type: 'scatter',
+      coordinateSystem: 'bmap',
+      data: convertData(data),
+      symbolSize: 8,
+      encode: {
+        value: 2
+      },
+      label: {
+        formatter: '{b}',
+        position: 'right',
+        show: true
+      },
+      itemStyle: {
+        shadowBlur: 2,
+        shadowColor: '#333'
+      },
+      emphasis: {
+        scale: true
+      }
+    }
+  ]
+};
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+</body>
+</html>
